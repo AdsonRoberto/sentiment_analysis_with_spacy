@@ -43,3 +43,43 @@ def preprocessamento(texto):
   lista = ' '.join([str(elemento) for elemento in lista if not elemento.isdigit()])
 
   return lista
+
+teste = preprocessamento('Estou aPrendendo 1 10 23 processamento de linguagem natural, Curso em Curitiba')
+teste
+
+base_dados['texto'] = base_dados['texto'].apply(preprocessamento)
+
+base_dados.head(10)
+
+exemplo_base_dados = [["este trabalho é agradável", {"ALEGRIA": True, "MEDO": False}],
+                      ["este lugar continua assustador", {"ALEGRIA": False, "MEDO": True}]]
+
+type(exemplo_base_dados)
+
+exemplo_base_dados[0]
+
+exemplo_base_dados[0][0]
+
+exemplo_base_dados[0][1]
+
+type(exemplo_base_dados[0][1])
+
+base_dados_final = []
+for texto, emocao in zip(base_dados['texto'], base_dados['emocao']):
+  #print(texto, emocao)
+  if emocao == 'alegria':
+    dic = ({'ALEGRIA': True, 'MEDO': False})
+  elif emocao == 'medo':
+    dic = ({'ALEGRIA': False, 'MEDO': True})
+
+  base_dados_final.append([texto, dic.copy()])
+
+len(base_dados_final)
+
+base_dados_final[0]
+
+base_dados_final[0][0]
+
+base_dados_final[0][1]
+
+type(base_dados_final[0][1])
