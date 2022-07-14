@@ -103,16 +103,18 @@ for epoca in range(1000):
     print(losses)
     historico.append(losses)
 
-modelo = spacy.blank('pt')
-categorias = modelo.create_pipe("textcat")
-categorias.add_label("ALEGRIA")
-categorias.add_label("MEDO")
-modelo.add_pipe(categorias)
-historico = []
-
 historico_loss = []
 for i in historico:
   historico_loss.append(i.get('textcat'))
+
+historico_loss = np.array(historico_loss)
+historico_loss
+
+import matplotlib.pyplot as plt
+plt.plot(historico_loss)
+plt.title('Progressão do erro')
+plt.xlabel('Épocas')
+plt.ylabel('Erro')
 
 modelo.to_disk("modelo")
 
