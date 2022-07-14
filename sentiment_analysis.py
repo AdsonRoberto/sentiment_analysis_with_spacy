@@ -83,3 +83,35 @@ base_dados_final[0][0]
 base_dados_final[0][1]
 
 type(base_dados_final[0][1])
+
+modelo = spacy.blank('pt')
+categorias = modelo.create_pipe("textcat")
+categorias.add_label("ALEGRIA")
+categorias.add_label("MEDO")
+modelo.add_pipe(categorias)
+historico = []
+
+modelo.begin_training()
+for epoca in range(1000):
+  random.shuffle(base_dados_final)
+  losses = {}
+  for batch in spacy.util.minibatch(base_dados_final, 30):
+    textos = [modelo(texto) for texto, entities in batch]
+    annotations = [{'cats': entities} for texto, entities in batch]
+    modelo.update(textos, annotations, losses=losses)
+  if epoca % 100 == 0:
+    print(losses)
+    historico.append(losses)
+
+modelo = spacy.blank('pt')
+categorias = modelo.create_pipe("textcat")
+categorias.add_label("ALEGRIA")
+categorias.add_label("MEDO")
+modelo.add_pipe(categorias)
+historico = []
+
+historico_loss = []
+for i in historico:
+  historico_loss.append(i.get('textcat'))
+
+modelo.to_disk("modelo")
