@@ -115,3 +115,20 @@ for i in historico:
   historico_loss.append(i.get('textcat'))
 
 modelo.to_disk("modelo")
+
+modelo_carregado = spacy.load("modelo")
+modelo_carregado
+
+texto_positivo = 'eu adoro cor dos seus olhos'
+
+texto_positivo = preprocessamento(texto_positivo)
+texto_positivo
+
+previsao = modelo_carregado(texto_positivo)
+previsao
+
+previsao.cats
+
+texto_negativo = 'estou com medo dele'
+previsao = modelo_carregado(preprocessamento(texto_negativo))
+previsao.cats
